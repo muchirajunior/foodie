@@ -26,9 +26,14 @@ export default function RootLayout({
  
   
   return (
-    <html lang="en" className="dark-mode" >
+    <html lang="en" >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => { try { var s = localStorage.getItem('theme'); var d = window.matchMedia('(prefers-color-scheme: dark)').matches; var t = s ? s : (d ? 'dark' : 'light'); document.documentElement.dataset.theme = t; } catch (e) {} })();`
+          }}
+        />
         {children}
       </body>
     </html>

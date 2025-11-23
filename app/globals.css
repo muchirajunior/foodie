@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
-/* Light mode variables */
-
-.light-mode{
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-/* Dark mode variables */
-.dark-mode{
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-  }
+html[data-theme="dark"] {
+  --background: rgb(4, 4, 21);
+  --foreground: #ededed;
+}
 
+html[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+}
 
-/* Apply CSS variables to base elements */
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
 }
-

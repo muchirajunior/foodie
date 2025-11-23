@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { deleteFoodItemData, FoodItem, getFoodItemData, setFoodItemData } from "./lib/food_items_service";
+import ThemeToggle from "./components/ThemeToggle";
 
 export default function Home() {
   const [state,submit,isPending] = useActionState(addFood,null);
@@ -77,7 +78,7 @@ export default function Home() {
        </form>
       { 
         data.isLoading ? 
-        <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto  animate-spin"/> :
+        <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto animate-spin"/> :
         <section className="flex flex-wrap max-w-4xl">
           { 
             data.foodData.map((food)=><div className="flex flex-col p-4 m-2 shadow-lg rounded-lg w-60" key={food.id}>
@@ -91,6 +92,8 @@ export default function Home() {
           }
         </section>
         }
+        <ThemeToggle />
     </div>
+    
   );
 }
