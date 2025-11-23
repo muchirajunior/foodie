@@ -1,35 +1,47 @@
 'use client';
 
 import { useActionState, useEffect, useState } from "react";
-import { setRedisData, getRedisData } from "./lib/redis_client";
+import { setRedisData, getRedisData, deleteRedisData } from "./lib/redis_client";
 
 export default function Home() {
   const [state,submit,isPending] = useActionState(addFood,null);
   const [foodName, setFoodName] =  useState('')
   const [data,setData] = useState({
     isLoading: false,
-    foodData: ''
+    foodData: ['']
   })
 
   async function getData() {
     setData({...data, isLoading:true});
-    var response = await getRedisData('food')
-     setData({foodData: response ?? '', isLoading:false});
+    var response = await getRedisData()
+     setData({foodData: response ?? [], isLoading:false});
   }
 
   async function addFood() {
     if(foodName.length <= 4)return;
-    var response = await setRedisData({key: 'food',value: foodName})
+    var response = await setRedisData(foodName)
     console.log(response);
     getData()
+    setFoodName('');
     return response;
   }
+
+  async function deleteFood(food:string) {
+    setData({...data, isLoading:true})
+    var res= await deleteRedisData({index: data.foodData.indexOf(food), value: food});
+    setData({...data, isLoading:false})
+    if(res)getData()
+  }
+
+
 
   useEffect(()=>{getData()},[])
 
 
   return (
     <div className="flex min-h-screen items-center justify-center flex-col">
+      <h2 className="font-bold text-3xl">FoodiE APP</h2>
+      <div className="text-gray-500 mb-8">A NextJS and Redis workflow</div>
        <form className="flex max-w-5xl flex-wrap m-5 gap-5" action={submit}>
           <input
             type="text"
@@ -47,8 +59,17 @@ export default function Home() {
       { 
         data.isLoading ? 
         <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto  animate-spin"/> :
-        <section className="grid">
-          <div className="col p-4 m-2 shadow shadow-lg rounded-lg font-bold">{data.foodData.toUpperCase()}</div>
+        <section className="flex flex-wrap max-w-4xl">
+          { 
+            data.foodData.map((food)=><div className="flex  flex-col p-4 m-2 shadow shadow-lg rounded-lg w-60 justify-start" key={food}>
+              <span className="text-lg"> {food}</span>
+              <span className="text-gray-500 mb-4">Ksh 500</span>
+              <button 
+                className="font-normal  text-white rounded bg-red-800 px-2 cursor-pointer"
+                onClick={()=>deleteFood(food)}
+              >Delete</button>
+            </div>)
+          }
         </section>
         }
     </div>
