@@ -28,8 +28,8 @@ A simple food listing app built with Next.js and Redis. You can add and delete i
    ```bash
    REDIS_PASSWORD=""
    REDIS_HOST_URL="r"
-   REDIS_PORT=18795
-   REDIS_USERNAME="default"
+   REDIS_PORT=0000
+   REDIS_USERNAME=""
    ```
 
    Do not commit real secrets. `.env*` is ignored by Git in this repo.
