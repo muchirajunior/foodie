@@ -1,7 +1,6 @@
 'use client';
 
 import { useActionState, useEffect, useState } from "react";
-import { redisClient } from "./lib/redis_client";
 import { deleteFoodItemData, FoodItem, getFoodItemData, setFoodItemData } from "./lib/food_items_service";
 
 export default function Home() {
@@ -81,7 +80,7 @@ export default function Home() {
         <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto  animate-spin"/> :
         <section className="flex flex-wrap max-w-4xl">
           { 
-            data.foodData.map((food)=><div className="flex  flex-col p-4 m-2 shadow shadow-lg rounded-lg w-60 justify-start" key={food.id}>
+            data.foodData.map((food)=><div className="flex flex-col p-4 m-2 shadow shadow-lg rounded-lg w-60 justify-start" key={food.id}>
               <span className="text-lg"> {food.name}</span>
               <span className="text-gray-500 mb-4">Ksh {food.price}</span>
               <button 
