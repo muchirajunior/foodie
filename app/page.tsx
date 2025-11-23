@@ -54,7 +54,7 @@ export default function Home() {
           />
            <input
             type="text"
-            className="p-2 border border-gray-300 focus:outline-orange-800 rounded-lg"
+            className="p-2 border border-gray-300 focus:border-0 focus:outline-orange-800 rounded-lg"
             placeholder="Price"
             value={food.price}
             onChange={(event) => {
@@ -80,7 +80,7 @@ export default function Home() {
         <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto  animate-spin"/> :
         <section className="flex flex-wrap max-w-4xl">
           { 
-            data.foodData.map((food)=><div className="flex flex-col p-4 m-2 shadow shadow-lg rounded-lg w-60 justify-start" key={food.id}>
+            data.foodData.map((food)=><div className="flex flex-col p-4 m-2 shadow-lg rounded-lg w-60" key={food.id}>
               <span className="text-lg"> {food.name}</span>
               <span className="text-gray-500 mb-4">Ksh {food.price}</span>
               <button 
