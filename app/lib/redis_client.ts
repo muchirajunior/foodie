@@ -7,7 +7,7 @@ let client : RedisClientType | null = null;
 export const  redisClient =  async () : Promise<RedisClientType> =>{
     if(client != null) return client;
     console.log('Connect to redis');
-    
+    //@ts-ignore
     client = await createClient({
         username:  process.env.REDIS_USERNAME,
         password: process.env.REDIS_PASSWORD,

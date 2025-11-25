@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { deleteFoodItemData, FoodItem, getFoodItemData, setFoodItemData } from "./lib/food_items_service";
 import ThemeToggle from "./components/ThemeToggle";
+import Link from "next/link";
 
 export default function Home() {
   const [state,submit,isPending] = useActionState(addFood,null);
@@ -79,7 +80,7 @@ export default function Home() {
       { 
         data.isLoading ? 
         <span className="flex p-5 border border-4 border-orange-200 border-b-orange-800  rounded-full mx-auto animate-spin"/> :
-        <section className="flex flex-wrap max-w-4xl">
+        <section className="flex flex-wrap max-w-4xl w-full">
           { 
             data.foodData.map((food)=><div className="flex flex-col p-4 m-2 shadow-lg rounded-lg w-60 dark:border dark:border-gray-100" key={food.id}>
               <span className="text-lg"> {food.name}</span>
@@ -92,7 +93,11 @@ export default function Home() {
           }
         </section>
         }
-        <ThemeToggle />
+        <div className="flex flex-row p-2 max-w-4xl justify-between w-full mt-8">
+          <Link className='bg-orange-800 hover:bg-orange-900 text-white px-5 py-2 cursor-pointer rounded-lg' href={'/orders'}>See Orders</Link>
+          <ThemeToggle />
+        </div>
+      
     </div>
     
   );
