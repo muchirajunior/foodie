@@ -3,7 +3,6 @@
 A simple food listing app built with Next.js and Redis. You can add and delete items; data is stored in a Redis list.
 
 ![Home](./public/home.png)
-![Orders](./public/orders.png)
 ![Create Order](./public/create_order.png)
 
 ## Tech Stack
