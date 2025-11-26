@@ -35,6 +35,17 @@ export default function CreateNewOrder() {
         setOrder(prev=> ({...prev,documentTotal:(prev.documentTotal +foodItem.price)  ,items:[...prev.items, foodItem ]}))
     }
 
+    async function removeItem(item: OrderItem){
+        const confirmed = confirm(`Remove ${item.itemName} from the list`)
+        console.log();
+        if(confirmed){
+            var x = order.items.filter((i)=> i.itemID == item.itemID ? null : i);
+            let total = 0;
+             x.forEach((i)=> total +=  i.price )
+            setOrder(prev=> ({...prev, documentTotal: total, items: x}))
+        }
+    }
+
     async function handleSubmit(){
         var res =  await createOrder(order);
         if(res == null) redirect('/orders');
@@ -58,29 +69,26 @@ export default function CreateNewOrder() {
                     value={order.customerName}
                     onChange={(e)=>setOrder((prev)=>({...prev,customerName: e.target.value}))}
                 />
-                <div className="flex flex-row flex-wrap gap-5 mb-3">
+                <div className="flex flex-row flex-wrap gap-3 mb-3 w-full my-4">
                 {
                     order.items.map((item)=><span 
-                        className="border border-gray-200 rounded-lg w-80 p-3 shadow"
+                        className="border border-gray-200 rounded-lg w-65 p-3 shadow"
                         key={item.itemID}
                     >
-                        <h3 className="font-bold">{item.itemName}</h3>
+                        <h3 className="font-bold mb-2">{item.itemName}</h3>
                         <div className="flex items-center w-full justify-between">
-                            <span className="text-orange-800">Ksh. {item.price}</span>
-                            <section className="flex  p-1 gap-3 items-center ">
-                                <button className="bg-orange-800  px-3 rounded-lg font-bold text-2xl text-white" onClick={()=>null} >-</button>
-                                <span className="text-lg text">{item.quantity}</span>
-                                <button className="bg-orange-800 px-3 rounded-lg font-bold text-2xl text-white"  onClick={()=>null} >+</button>
-                            </section>
+                            <span className="text-orange-800">Ksh.{item.price}</span>
+                            <button className="bg-orange-800 px-3  py-1 rounded-lg font-bold text-sm text-white" type="button" onClick={()=>removeItem(item)} >Delete</button>
                         </div>
                     </span> )
                 }
                </div>
+               <br />
                 {
                     state != null ? <span className="mb-3 text-red-800">{state}</span> : null
                 }
                <div className="flex flex-wrap w-full justify-between mt-2">
-                <select name="" id="" className="rounded-lg border border-gray-200 focus:outline-0 px-4 py-2 text-lg "
+                <select name="" id="" className="rounded-lg border border-gray-200 focus:outline-0 px-4 py-2 text-lg"
                 onChange={(v)=>addFoodItem(foodItems.find((f)=>f.id == v.target.value))}
                 >
                     <option value=""  key={'select'}>Select Food Item</option>

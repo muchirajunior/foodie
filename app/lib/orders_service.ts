@@ -30,7 +30,7 @@ export async function createOrder(order: Order) : Promise<String | null> {
         });
         console.log(response);
         revalidatePath('/orders')
-         return null;
+        return null;
     } catch (error: any) {
         return error.toString()
     }
