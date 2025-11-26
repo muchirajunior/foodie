@@ -47,7 +47,7 @@ export default function Home() {
        <form className="flex max-w-5xl flex-wrap m-5 gap-5" action={submit}>
           <input
             type="text"
-            className="p-2 border border-gray-300 focus:outline-orange-800 rounded-lg"
+            className="p-2 border border-gray-300 focus:outline-2 focus:border-0 focus:outline-orange-800 rounded-lg"
             placeholder="Food Name"
             value={food.name}
             onChange={(event)=>setFood(prev=>({...prev, name: event.target.value }))}
@@ -56,7 +56,7 @@ export default function Home() {
           />
            <input
             type="text"
-            className="p-2 border border-gray-300 focus:border-0 focus:outline-orange-800 rounded-lg"
+            className="p-2 border border-gray-300 focus:outline-2 focus:border-0 focus:outline-orange-800 rounded-lg"
             placeholder="Price"
             value={food.price}
             onChange={(event) => {

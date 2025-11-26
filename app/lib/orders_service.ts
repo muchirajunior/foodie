@@ -1,14 +1,17 @@
+'use server';
+
+import { revalidatePath } from "next/cache";
 import { redisClient } from "./redis_client";
 
 export type Order = {
     id: string,
-    docNum: number,
+    documentNumber: number,
     customerName: string,
     documentTotal: number,
     items : Array<OrderItem>,
 }
 
-type OrderItem = {
+export type OrderItem = {
     itemID: string,
     itemName: string,
     quantity: number,
@@ -17,9 +20,17 @@ type OrderItem = {
 
 export async function createOrder(order: Order) : Promise<String | null> {
     try {
-        var response =  await (await redisClient()).hSet(`orders:${order.id}`,Object(order))
-        if(response === 1) return null;
-        return 'Error creating order.';
+        const client = await redisClient();
+        const response = await client.hSet(`orders:${order.id}`, {
+            id: order.id,
+            documentNumber: order.documentNumber.toString(),
+            customerName: order.customerName,
+            documentTotal: order.documentTotal.toString(),
+            items: JSON.stringify(order.items)
+        });
+        console.log(response);
+        revalidatePath('/orders')
+         return null;
     } catch (error: any) {
         return error.toString()
     }
