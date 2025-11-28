@@ -38,9 +38,23 @@ export async function createOrder(order: Order) : Promise<String | null> {
 
 export async function getAllOrders() {
     try {
-        var response =  await (await redisClient()).hGetAll('orders:*');
-        console.log(response);
-        return response;
+        const client = await redisClient();
+        const keys = await client.keys('orders:*');
+        const orders: Order[] = [];
+        for (const key of keys) {
+            const raw = await client.hGetAll(key);
+            if (raw && raw.id) {
+                orders.push({
+                    id: raw.id,
+                    documentNumber: Number(raw.documentNumber),
+                    customerName: raw.customerName,
+                    documentTotal: Number(raw.documentTotal),
+                    items: JSON.parse(raw.items || '[]')
+                });
+            }
+        }
+        // console.log(Object(orders));
+        return orders;
     } catch (error: any) {
         console.log(error.toString());
         return [];
